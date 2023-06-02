@@ -6,7 +6,9 @@ import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import ipvc.estg.retrofit.adapter.CommentAdapter
 import ipvc.estg.retrofit.adapter.UserAdapter
+import ipvc.estg.retrofit.api.Comment
 import ipvc.estg.retrofit.api.EndPoints
 import ipvc.estg.retrofit.api.OutputPost
 import ipvc.estg.retrofit.api.ServiceBuilder
@@ -25,9 +27,10 @@ class MainActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.recyclerView)
 
         val request = ServiceBuilder.buildService(EndPoints::class.java)
-        val call = request.getUsers()
+        //val call = request.getUsers()
+        val call = request.getComments()
 
-        call.enqueue(object : Callback<List<User>> {
+/*        call.enqueue(object : Callback<List<User>> {
             override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
                 if (response.isSuccessful){
                     recyclerView.apply {
@@ -41,13 +44,29 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this@MainActivity, "${t.message}", Toast.LENGTH_SHORT).show()
             }
         })
+    }*/
+        call.enqueue(object : Callback<List<Comment>> {
+            override fun onResponse(call: Call<List<Comment>>, response: Response<List<Comment>>) {
+                if (response.isSuccessful){
+                    recyclerView.apply {
+                        setHasFixedSize(true)
+                        layoutManager = LinearLayoutManager(this@MainActivity)
+                        adapter = CommentAdapter(response.body()!!)
+                    }
+                }
+            }
+            override fun onFailure(call: Call<List<Comment>>, t: Throwable) {
+                Toast.makeText(this@MainActivity, "${t.message}", Toast.LENGTH_SHORT).show()
+            }
+        })
     }
 
     fun getSingle(view: View){
         val request = ServiceBuilder.buildService(EndPoints::class.java)
-        val call = request.getUserById(2)
+        //val call = request.getUserById(2)
+        val call = request.getCommentById(2)
 
-        call.enqueue(object : Callback<User>{
+/*        call.enqueue(object : Callback<User>{
             override fun onResponse(call: Call<User>, response: Response<User>) {
                 if (response.isSuccessful){
                     val c:User = response.body()!!
@@ -55,6 +74,18 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             override fun onFailure(call: Call<User>, t: Throwable) {
+                Toast.makeText(this@MainActivity, "${t.message}", Toast.LENGTH_SHORT).show()
+            }
+        })*/
+
+        call.enqueue(object : Callback<Comment>{
+            override fun onResponse(call: Call<Comment>, response: Response<Comment>) {
+                if (response.isSuccessful){
+                    val c:Comment = response.body()!!
+                    Toast.makeText(this@MainActivity, c.email, Toast.LENGTH_SHORT).show()
+                }
+            }
+            override fun onFailure(call: Call<Comment>, t: Throwable) {
                 Toast.makeText(this@MainActivity, "${t.message}", Toast.LENGTH_SHORT).show()
             }
         })

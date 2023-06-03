@@ -5,11 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="10dp" />
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -28,6 +32,27 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="POST">
+        </Button>
+        <Button
+            android:layout_width="0dp"
+            android:onClick="totalComments"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Total Comments">
+        </Button>
+        <Button
+            android:layout_width="0dp"
+            android:onClick="getNameByEmail"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Get Name">
+        </Button>
+        <Button
+            android:layout_width="0dp"
+            android:onClick="getEmailCountEndingWithCom"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Get Email .com">
         </Button>
     </LinearLayout>
 </RelativeLayout>

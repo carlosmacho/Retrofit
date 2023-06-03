@@ -91,6 +91,72 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
+    fun totalComments(view: View){
+        val request = ServiceBuilder.buildService(EndPoints::class.java)
+        val call = request.getComments()
+
+        call.enqueue(object : Callback<List<Comment>> {
+            override fun onResponse(call: Call<List<Comment>>, response: Response<List<Comment>>) {
+                if (response.isSuccessful){
+                    val totalComments = response.body()?.size ?: 0
+                    Toast.makeText(this@MainActivity, "Total comments: $totalComments", Toast.LENGTH_SHORT).show()
+
+                }
+            }
+            override fun onFailure(call: Call<List<Comment>>, t: Throwable) {
+                Toast.makeText(this@MainActivity, "${t.message}", Toast.LENGTH_SHORT).show()
+            }
+        })
+
+    }
+
+    fun getNameByEmail(view: View) {
+        val request = ServiceBuilder.buildService(EndPoints::class.java)
+        val call = request.getNameByEmail("Hudson.Blick@ruben.biz")
+
+        call.enqueue(object : Callback<List<Comment>> {
+            override fun onResponse(call: Call<List<Comment>>, response: Response<List<Comment>>) {
+                if (response.isSuccessful) {
+                    val comments: List<Comment>? = response.body()
+                    if (!comments.isNullOrEmpty()) {
+                        val comment: Comment = comments[0]
+                        Toast.makeText(this@MainActivity, "Name: " + comment.name, Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(this@MainActivity, "No comments found", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<List<Comment>>, t: Throwable) {
+                Toast.makeText(this@MainActivity, "${t.message}", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    fun getEmailCountEndingWithCom(view: View) {
+        val request = ServiceBuilder.buildService(EndPoints::class.java)
+        val call = request.getComments()
+
+        call.enqueue(object : Callback<List<Comment>> {
+            override fun onResponse(call: Call<List<Comment>>, response: Response<List<Comment>>) {
+                if (response.isSuccessful) {
+                    val comments: List<Comment>? = response.body()
+                    if (!comments.isNullOrEmpty()) {
+                        val count = comments.count { it.email.endsWith(".com") }
+                        Toast.makeText(this@MainActivity, "$count .com emails", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(this@MainActivity, "No comments found", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<List<Comment>>, t: Throwable) {
+                Toast.makeText(this@MainActivity, "${t.message}", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+
     fun post(view: View) {
         val request = ServiceBuilder.buildService(EndPoints::class.java)
         val call = request.postTest("teste")

@@ -6,6 +6,7 @@ import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface EndPoints {
     @GET("/users/")
@@ -19,6 +20,9 @@ interface EndPoints {
 
     @GET("/comments/{id}")
     fun getCommentById(@Path("id") id: Int): Call<Comment>
+
+    @GET("/comments")
+    fun getNameByEmail(@Query("email") email: String): Call<List<Comment>>
 
     @FormUrlEncoded
     @POST("/posts")

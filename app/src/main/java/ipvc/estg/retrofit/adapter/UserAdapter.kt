@@ -25,14 +25,14 @@ class UserAdapter(val users: List<User>): RecyclerView.Adapter<UsersViewHolder>(
 }
 
 class UsersViewHolder(itemView : View): RecyclerView.ViewHolder(itemView){
-    private val name: TextView = itemView.findViewById(R.id.name)
-    private val email:TextView = itemView.findViewById(R.id.email)
-    private val city:TextView = itemView.findViewById(R.id.city)
+    private val website: TextView = itemView.findViewById(R.id.website)
+    private val companyName:TextView = itemView.findViewById(R.id.companyName)
+    private val coords:TextView = itemView.findViewById(R.id.coords)
 
     fun bind(user: User) {
-        name.text = user.name
-        city.text = user.address.city
-        email.text = email.text
+        website.text = user.name
+        companyName.text = user.company.name
+        coords.text = user.address.geo.lat + "; " + user.address.geo.lng
     }
 
 }

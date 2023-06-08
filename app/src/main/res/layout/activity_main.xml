@@ -35,24 +35,24 @@
         </Button>
         <Button
             android:layout_width="0dp"
-            android:onClick="totalComments"
+            android:onClick="totalCountries"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Total Comments">
+            android:text="Total Countries">
         </Button>
         <Button
             android:layout_width="0dp"
-            android:onClick="getNameByEmail"
+            android:onClick="totalIndependentCountries"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Get Name">
+            android:text="Get Independent">
         </Button>
         <Button
             android:layout_width="0dp"
-            android:onClick="getEmailCountEndingWithCom"
+            android:onClick="getUsersWithCitySouthElvis"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Get Email .com">
+            android:text="Get South Elvis">
         </Button>
     </LinearLayout>
 </RelativeLayout>

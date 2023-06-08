@@ -12,6 +12,9 @@ interface EndPoints {
     @GET("/users/")
     fun getUsers(): Call<List<User>>
 
+    @GET("all")
+    fun getCountries(): Call<List<Country>>
+
     @GET("/comments/")
     fun getComments(): Call<List<Comment>>
 

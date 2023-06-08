@@ -2,6 +2,7 @@ package ipvc.estg.retrofit
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -9,9 +10,12 @@ import androidx.recyclerview.widget.RecyclerView
 import ipvc.estg.retrofit.adapter.CommentAdapter
 import ipvc.estg.retrofit.adapter.UserAdapter
 import ipvc.estg.retrofit.api.Comment
+import ipvc.estg.retrofit.api.Country
 import ipvc.estg.retrofit.api.EndPoints
 import ipvc.estg.retrofit.api.OutputPost
+import ipvc.estg.retrofit.api.OutputPostCountries
 import ipvc.estg.retrofit.api.ServiceBuilder
+import ipvc.estg.retrofit.api.ServiceBuilderCountries
 import ipvc.estg.retrofit.api.User
 import retrofit2.Call
 import retrofit2.Callback
@@ -27,12 +31,13 @@ class MainActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.recyclerView)
 
         val request = ServiceBuilder.buildService(EndPoints::class.java)
-        //val call = request.getUsers()
-        val call = request.getComments()
+        val call = request.getUsers()
+        //val call = request.getComments()
 
-/*        call.enqueue(object : Callback<List<User>> {
+        call.enqueue(object : Callback<List<User>> {
             override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
                 if (response.isSuccessful){
+
                     recyclerView.apply {
                         setHasFixedSize(true)
                         layoutManager = LinearLayoutManager(this@MainActivity)
@@ -44,8 +49,8 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this@MainActivity, "${t.message}", Toast.LENGTH_SHORT).show()
             }
         })
-    }*/
-        call.enqueue(object : Callback<List<Comment>> {
+
+/*        call.enqueue(object : Callback<List<Comment>> {
             override fun onResponse(call: Call<List<Comment>>, response: Response<List<Comment>>) {
                 if (response.isSuccessful){
                     recyclerView.apply {
@@ -58,7 +63,7 @@ class MainActivity : AppCompatActivity() {
             override fun onFailure(call: Call<List<Comment>>, t: Throwable) {
                 Toast.makeText(this@MainActivity, "${t.message}", Toast.LENGTH_SHORT).show()
             }
-        })
+        })*/
     }
 
     fun getSingle(view: View){
@@ -156,6 +161,29 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
+    fun getUsersWithCitySouthElvis(view: View) {
+        val request = ServiceBuilder.buildService(EndPoints::class.java)
+        val call = request.getUsers()
+
+        call.enqueue(object : Callback<List<User>> {
+            override fun onResponse(call: Call<List<User>>, response: Response<List<User>>) {
+                if (response.isSuccessful) {
+                    val comments: List<User>? = response.body()
+                    if (!comments.isNullOrEmpty()) {
+                        val count = comments.count { it.address.city.equals("South Elvis") }
+                        Toast.makeText(this@MainActivity, "$count users with South Elvis as a city", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(this@MainActivity, "No comments found", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<List<User>>, t: Throwable) {
+                Toast.makeText(this@MainActivity, "${t.message}", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
 
     fun post(view: View) {
         val request = ServiceBuilder.buildService(EndPoints::class.java)
@@ -173,5 +201,48 @@ class MainActivity : AppCompatActivity() {
             }
         })
     }
+
+    fun totalCountries(view: View){
+        val request = ServiceBuilderCountries.buildService(EndPoints::class.java)
+        val call = request.getCountries()
+
+        call.enqueue(object : Callback<List<Country>> {
+            override fun onResponse(call: Call<List<Country>>, response: Response<List<Country>>) {
+                if (response.isSuccessful){
+                    val totalCountries = response.body()?.size ?: 0
+                    Toast.makeText(this@MainActivity, "Total countries: $totalCountries", Toast.LENGTH_SHORT).show()
+                    // Log.d("" )
+                }
+            }
+            override fun onFailure(call: Call<List<Country>>, t: Throwable) {
+                Toast.makeText(this@MainActivity, "${t.message}", Toast.LENGTH_SHORT).show()
+                Log.d("ABC", "ERRO: ${t.message}")
+            }
+        })
+    }
+    fun totalIndependentCountries(view: View){
+        val request = ServiceBuilderCountries.buildService(EndPoints::class.java)
+        val call = request.getCountries()
+
+        call.enqueue(object : Callback<List<Country>> {
+            override fun onResponse(call: Call<List<Country>>, response: Response<List<Country>>) {
+                if (response.isSuccessful){
+                    val countries: List<Country>? = response.body()
+                    if (!countries.isNullOrEmpty()) {
+                        val count = countries.count { it.independent.and(true) }
+                        Toast.makeText(this@MainActivity, "$count countries indepedent", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(this@MainActivity, "No countries found", Toast.LENGTH_SHORT).show()
+                    }
+
+                }
+            }
+            override fun onFailure(call: Call<List<Country>>, t: Throwable) {
+                Toast.makeText(this@MainActivity, "${t.message}", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
 }
+
 

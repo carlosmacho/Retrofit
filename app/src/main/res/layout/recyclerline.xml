@@ -5,32 +5,35 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/name"
-        android:layout_width="wrap_content"
+        android:id="@+id/website"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
-        android:text="John"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:text="Website"
         android:textStyle="bold"></TextView>
 
     <TextView
-        android:id="@+id/email"
+        android:id="@+id/companyName"
         android:text="test@xpto.com"
-        android:layout_below="@id/name"
-        android:layout_alignLeft="@+id/name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_below="@id/website"
+        android:layout_alignLeft="@+id/website"
+        android:layout_marginTop="10dp"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        >
     </TextView>
 
     <TextView
-        android:id="@+id/city"
-        android:text="Madrid"
-        android:layout_alignTop="@id/name"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="10dp"
-        android:layout_width="wrap_content"
+        android:id="@+id/coords"
+        android:text="Coords"
+        android:layout_below="@id/companyName"
+        android:layout_alignLeft="@id/companyName"
+        android:layout_width="150dp"
         android:layout_height="wrap_content">
 
     </TextView>

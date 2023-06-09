@@ -30,7 +30,7 @@ class UsersViewHolder(itemView : View): RecyclerView.ViewHolder(itemView){
     private val coords:TextView = itemView.findViewById(R.id.coords)
 
     fun bind(user: User) {
-        website.text = user.name
+        website.text = user.website
         companyName.text = user.company.name
         coords.text = user.address.geo.lat + "; " + user.address.geo.lng
     }
